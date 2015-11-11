@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+	<head>
+		<title>New Bean Drawing!</title>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/jquery.fileupload.css">
+		<link rel="stylesheet" href="css/style.css">
+		<!--[if lt IE 9]><script src="js/html5shiv/html5shiv-printshiv.js"></script><![endif]-->
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.ui.widget.js"></script>
+		<script src="js/jquery.fileupload.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/collapse.js"></script>
+		<script>
+
+
+			$(document).ready(function(){
+
+
+				var fu=$("#file").fileupload({ 
+					"autoUpload" : false,
+        			"add" : function(event, data) {
+
+        				$("#save").off('click').on('click', function(){
+
+        					// data.formData=[{"name":"something", "value":"somee"}];
+        					data.submit();
+        					return false;
+        				});
+
+        			},
+					"fail" : function (event, data){
+
+
+					},
+					"done" : function (event, data){
+
+						if(data.result.error) {	
+
+
+						} else {
+
+							$("div#filename").text(data.files[0].name).show();
+						}
+
+					},
+					"progressall" : function(event, data){
+
+						var progress=parseInt(data.loaded / data.total * 100, 10);
+						$("div.progress").show();
+						$("div.progress div.progress-bar").attr("aria-valuenow", progress).text(progress+"%").css("width",progress+"%");
+
+					}
+				});
+
+
+			});
+
+		</script>
+	</head>
+	<body>
+		<div class="container">
+
+
+			<h1>She did it again! Let's post it.</h1>
+
+			<div class="row">
+				<div class="col-md-6">
+					<form id="upload_controls" class="form-horizontal" method="post" role="form" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-md-3">
+								<span class="btn btn-default btn-file">
+									Browse <input type="file" name="file" id="file" data-url="/upload">
+								</span>
+							</div>
+							<div class="col-md-9">
+								<div class="progress collapse">
+									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%</div>
+								</div>
+								<div id="filename" class="collapse"></div>
+							</div>
+						</div>
+						<input class="form-control" id="title" name="title" placeholder="Title">
+						<label class="control-label sr-only" for="title">Title</label>
+						<textarea class="form-control" id="description" name="description" placeholder="Description" rows="6"></textarea>
+						<label class="control-label sr-only" for="description">Description</label>
+						<button id="save" class="btn btn-primary">Save</button>
+					</form>
+				</div>
+			
+				<div class="col-md-6">How nice.</div>
+			</div>
+		<div>
+
+	</body>
+</html>

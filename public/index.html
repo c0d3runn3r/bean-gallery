@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bean Gallery</title>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<!--[if lt IE 9]><script src="js/html5shiv/html5shiv-printshiv.js"></script><![endif]-->
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/collapse.js"></script>
+		<script src="js/LeafCache.js"></script>
+		<script>
+
+
+			$(document).ready(function(){
+
+				$.getJSON("/art/latest/metadata",function(data){
+
+					$("#title").text(data.title);
+					$("#description").text(data.description);
+				});
+
+			});
+
+		</script>
+	</head>
+	<body>
+
+		<div class="container">
+			<img id="main-image" class="img-responsive" src="/art/latest/image" >
+			<h2 id="title" style="display: inline"></h2>
+
+			<p id="description" style="display: inline"></p>
+
+		</div>
+
+	</body>
+</html>

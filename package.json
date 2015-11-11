@@ -1,0 +1,33 @@
+{
+  "name": "bean-gallery",
+  "version": "1.0.0",
+  "description": "Bean Gallery",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js | ./node_modules/.bin/bunyan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c0d3runn3r/bean-gallery.git"
+  },
+  "keywords": [
+    "stream",
+    "consciousness",
+    "gallery"
+  ],
+  "author": "c0d3runn3r",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/c0d3runn3r/bean-gallery/issues"
+  },
+  "homepage": "https://github.com/c0d3runn3r/bean-gallery#readme",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "bunyan": "^1.5.1",
+    "cassandra-driver": "^2.2.2",
+    "express": "^4.13.3",
+    "multer": "^1.1.0",
+    "node-uuid": "^1.4.3"
+  }
+}
