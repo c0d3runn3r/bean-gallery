@@ -11,18 +11,31 @@
 		<link rel="stylesheet" href="css/style.css">
 		<!--[if lt IE 9]><script src="js/html5shiv/html5shiv-printshiv.js"></script><![endif]-->
 		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.address-1.6.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/collapse.js"></script>
-		<script src="js/LeafCache.js"></script>
+		<!--script src="js/LeafCache.js"></script-->
 		<script>
 
 
 			$(document).ready(function(){
 
-				$.getJSON("/art/latest/metadata",function(data){
+				// Is this a permalink?
+				var id="latest"
+				if(a=$.address.baseURL().match(/\/([^\/]+)$/)){
+
+					if(a && a.length >1 && a[1].length==36) {
+
+						id=a[1];
+					}
+				}
+
+				$("#main-image").attr("src","art/"+id+"/image");
+				$.getJSON("/art/"+id+"/metadata",function(data){
 
 					$("#title").text(data.title);
 					$("#description").text(data.description);
+					$("#permalink").attr("href","/"+data.id);
 				});
 
 			});
@@ -31,12 +44,20 @@
 	</head>
 	<body>
 
-		<div class="container">
-			<img id="main-image" class="img-responsive" src="/art/latest/image" >
-			<h2 id="title" style="display: inline"></h2>
+		<div class="container" style="padding: 4em">
 
-			<p id="description" style="display: inline"></p>
+			<div class="row">
+				<div class="col-md-10 col-sm-12 col-md-offset-1">
 
+					<img id="main-image" class="img-responsive" src="">
+					<h2 id="title" style="display: inline"></h2>
+
+					<p id="description" style="display: inline"></p>
+					<a id="permalink">
+						<span class="glyphicon glyphicon-link"></span>
+						<span class="sr-only">Permalink</span>
+					</a>
+				</div>
 		</div>
 
 	</body>

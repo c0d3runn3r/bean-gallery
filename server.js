@@ -20,6 +20,8 @@ app.use(express.static("public"));	// Serve static files from the public folder
 //app.use(multer({ limits: { "dest" : "uploads/", filesize: 20000000 }}).single("file"));	// Multipart middleware for uploads
 app.use(multer({ limits: { "storage" : storage, filesize: 20000000 }}).single("file"));	// Multipart middleware for uploads
 
+
+
 // Uploads
 app.post("/upload", function(req,res) {
 
@@ -82,13 +84,22 @@ app.get("/art",function(req, res){
 		});
 });
 
+// Deep links map to index.html
+app.get("/:id", function(req, res){
+
+	res.sendfile("index.html", { "root": "./public"});
+
+});
+
+
 app.get("/art/:id/:part",function(req, res){
 
 
-	db.executeAsync("SELECT metadata"+((req.params.part=="image")?(", image"):"")+" FROM art "+((req.params.id=="latest")?"LIMIT 1":"WHERE id=?"), ((req.params.id=="latest")?[]:[req.params.id]))
+	db.executeAsync("SELECT id, metadata"+((req.params.part=="image")?(", image"):"")+" FROM art "+((req.params.id=="latest")?"LIMIT 1":"WHERE id=?"), ((req.params.id=="latest")?[]:[req.params.id]))
 		.then(function (result){
 
 			var metadata=JSON.parse(result.rows[0].metadata);
+			metadata.id=result.rows[0].id;
 
 			if(req.params.part=="image") {
 
